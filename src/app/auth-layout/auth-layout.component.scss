@@ -1,0 +1,54 @@
+@import 'variables';
+
+:host {
+    font-family: $font-secondary;
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+.landing {
+    min-height: 100vh;
+    
+    &-main-img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    &-content-section-container {
+        display: flex;
+        flex-direction: column;
+        padding: 68px 100px;
+        background-color: #fff;
+
+        @media (max-width: 991px) {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+        @media (max-width: 575px) {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            min-height: 100vh;
+        }
+
+        main {
+            width: 300px;
+            max-width: 100%;
+            margin-top: 7rem;
+
+            @media (max-width: 575px) {
+                width: 100%;
+            }
+        }
+
+        .logo-container {
+            padding-top: 7px;
+            padding-bottom: 8px;
+        
+            .logo {
+                height: 25px;
+            }
+        }
+    }
+}

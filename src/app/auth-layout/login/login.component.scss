@@ -1,0 +1,11 @@
+@import 'variables';
+
+.login {
+    &-container {
+
+        a.forgot-password-link {
+            font-size: 14px;
+            color: #919aa3;
+        }
+    }
+}

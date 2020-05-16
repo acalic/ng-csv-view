@@ -1,0 +1,37 @@
+@import 'variables';
+
+h3 {
+    font-size: 25px;
+    color: #000;
+    font-weight: normal;
+    margin-bottom: 23px;
+}
+
+a {
+    color: $color-blue;
+}
+
+.btn {
+    padding: 13px 20px 12px;
+    border-radius: 4px;
+    font-size: 17px;
+    line-height: 20px;
+}
+
+input {
+    border: 1px solid #d5dae2;
+    padding: 15px 25px;
+    margin-bottom: 20px;
+    min-height: 45px;
+    font-size: 13px;
+    line-height: 15;
+    font-weight: normal;
+
+    &::placeholder {
+        color: #919aa3;
+    }
+}
+
+.text-muted {
+    color: #919aa3;
+}

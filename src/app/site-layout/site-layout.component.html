@@ -1,0 +1,38 @@
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" [ngClass]="{'active': sidebarCollapse}">
+        <div class="custom-menu">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary" (click)="toggleSidebar()"></button>
+        </div>
+        <div class="img bg-wrap text-center py-4" style="background-image: url(assets/images/bg_1.jpg);">
+            <div class="user-profile-container">
+                <img class="user-profile-img" [src]="user.image" *ngIf="user.image" alt="User image">
+                <img class="user-profile-img" src="assets/images/my-profile.png" *ngIf="!user.image" alt="User image">
+                <h3 *ngIf='user.name'>{{user.name}}</h3>
+                <h3 *ngIf='!user.name && user.email'>{{user.email}}</h3>
+            </div>
+        </div>
+        <ul class="list-unstyled mb-5">
+            <li routerLinkActive="active">
+                <a routerLink="/home"><span class="fa fa-home mr-3"></span> Home</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/uploads"><span class="fa fa-download mr-3 notif"><small class="d-flex align-items-center justify-content-center">5</small></span> Uploads</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/stats"><span class="fa fa-line-chart mr-3"></span> Stats</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/user"><span class="fa fa-cog mr-3"></span> User Settings</a>
+            </li>
+            <li>
+                <a (click)="logout()"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <router-outlet></router-outlet>
+    </div>
+</div>
