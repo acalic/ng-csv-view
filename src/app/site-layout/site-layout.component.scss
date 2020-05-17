@@ -178,7 +178,7 @@ h5,
 
         .btn {
             &.btn-primary {
-                background: $color-primary;
+                background: $color-blue;
                 border-color: transparent;
                 position: relative;
                 color: $black;
@@ -195,7 +195,7 @@ h5,
                     color: $white;
                 }
                 &:after {
-                    content: "\f053";
+                    content: "\f0c9";
                     right: 2px;
                 }
             }
@@ -245,7 +245,7 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-#sidebarCollapse {
+#sidebar-collapse {
     span {
         @include media-breakpoint-down(md) {
             display: none;

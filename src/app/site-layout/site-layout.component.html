@@ -1,7 +1,7 @@
 <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar" [ngClass]="{'active': sidebarCollapse}">
         <div class="custom-menu">
-            <button type="button" id="sidebarCollapse" class="btn btn-primary" (click)="toggleSidebar()"></button>
+            <button type="button" id="sidebar-collapse" class="btn btn-primary" (click)="toggleSidebar()"></button>
         </div>
         <div class="img bg-wrap text-center py-4" style="background-image: url(assets/images/bg_1.jpg);">
             <div class="user-profile-container">
@@ -33,6 +33,7 @@
 
     <!-- Page Content -->
     <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="mt-0 mt-md-3 mb-4">{{ pageTitle }}</h2>
         <router-outlet></router-outlet>
     </div>
 </div>

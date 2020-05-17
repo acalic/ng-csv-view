@@ -33,10 +33,10 @@ export const rootRouterConfig: Routes = [
       component: SiteLayoutComponent,
       resolve: { data: UserResolver},
       children: [
-        { path: 'home', component: HomeComponent},
-        { path: 'uploads', component: UploadsComponent},
-        { path: 'stats', component: StatsComponent},
-        { path: 'user', component: UserComponent, resolve: { data: UserResolver}}
+        { path: 'home', component: HomeComponent, data : {title : 'Welcome home!'}},
+        { path: 'uploads', component: UploadsComponent, data : {title : 'Uploads'}},
+        { path: 'stats', component: StatsComponent, data : {title : 'Stats'}},
+        { path: 'user', component: UserComponent, resolve: { data: UserResolver}, data : {title : 'User settings'}}
       ]
   },
 
