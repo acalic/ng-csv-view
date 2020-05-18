@@ -1,1 +1,33 @@
-<p>uploads works!</p>
+<div class="row">
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Select a file for upload
+            </div>
+            <div class="card-body">
+                <input type="file" (change)="uploadFile($event)" accept=".csv" />
+                <div class="progress">
+                    <div
+                        class="progress-bar progress-bar-striped bg-success"
+                        role="progressbar"
+                        [style.width]="(uploadProgress | async) + '%'"
+                        [attr.aria-valuenow]="(uploadProgress | async)"
+                        aria-valuemin="0"
+                        aria-valuemax="100">
+                    </div>
+                </div>
+                
+                <div class="mt-3" role="group" *ngIf="uploadState | async; let state">
+                    <button type="button" class="btn btn-sm btn-outline-warning mr-3" (click)="task.pause()" [disabled]="state === 'paused'">Pause</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger mr-3" (click)="task.cancel()" [disabled]="!(state === 'paused' || state === 'running')">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="task.resume()" [disabled]="state === 'running'">Resume</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-8">
+        <ul class="list-group" *ngIf="fileUploads">
+            <li class="list-group-item" *ngFor="let file of fileUploads">{{ file.name }}</li>
+        </ul>
+    </div>
+</div>

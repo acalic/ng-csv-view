@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { rootRouterConfig } from './app.routes';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; 
 
 /* Firebase */
 import { AngularFireModule } from '@angular/fire';
@@ -24,25 +27,28 @@ import { AuthService } from '@app/core/auth/auth.service';
 import { AuthLayoutComponent } from '@app/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from '@app/site-layout/site-layout.component';
 import { HomeComponent } from './site-layout/home/home.component';
-import { UploadsComponent } from './site-layout/uploads/uploads.component';
 import { StatsComponent } from './site-layout/stats/stats.component';
+import { UploadsComponent } from './site-layout/uploads/uploads.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
-    LoginComponent,
-    RegisterComponent,
     AuthLayoutComponent,
     SiteLayoutComponent,
+    LoginComponent,
+    RegisterComponent,
     HomeComponent,
     UploadsComponent,
-    StatsComponent
+    StatsComponent,
+    UserComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     RouterModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: false }),
 
     // Firebase modules

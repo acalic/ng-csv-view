@@ -35,7 +35,7 @@ export const rootRouterConfig: Routes = [
       children: [
         { path: 'home', component: HomeComponent, data : {title : 'Welcome home!'}},
         { path: 'uploads', component: UploadsComponent, data : {title : 'Uploads'}},
-        { path: 'stats', component: StatsComponent, data : {title : 'Stats'}},
+        { path: 'stats', component: StatsComponent, data : {title : 'Statistics'}},
         { path: 'user', component: UserComponent, resolve: { data: UserResolver}, data : {title : 'User settings'}}
       ]
   },
