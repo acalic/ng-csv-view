@@ -1,11 +1,10 @@
 <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar" [ngClass]="{'active': sidebarCollapse}">
-        <div class="img bg-wrap text-center py-4" style="background-image: url(assets/images/bg_1.jpg);">
-            <div class="user-profile-container">
-                <img class="user-profile-img" [src]="user.image" *ngIf="user.image" alt="User image">
-                <img class="user-profile-img" src="assets/images/my-profile.png" *ngIf="!user.image" alt="User image">
-                <h3 *ngIf='user.name'>{{user.name}}</h3>
-                <h3 *ngIf='!user.name && user.email'>{{user.email}}</h3>
+        <!-- <div class="img bg-wrap text-center py-4" style="background-image: url(assets/images/bg_1.jpg);"> -->
+        <div class="sidebar-header text-center py-2">
+            <div class="sidebar-header-container">
+                <img class="user-profile-img" src="assets/images/logo.svg" alt="Csv View Logo">
+                <h3>Csv View</h3>
             </div>
         </div>
         <ul class="list-unstyled mb-5">
@@ -14,29 +13,29 @@
             </li>
             <li routerLinkActive="active">
                 <a routerLink="/uploads"><span class="fa fa-file-text-o mr-3 notif">
-                    <small class="d-flex align-items-center justify-content-center">5</small></span>My Files
+                    <small class="d-flex align-items-center justify-content-center">{{ uploadsNum }}</small></span>My Files
                 </a>
             </li>
             <li routerLinkActive="active">
                 <a routerLink="/stats"><span class="fa fa-line-chart mr-3"></span>Statistics</a>
             </li>
-            <!-- <li routerLinkActive="active">
+            <li routerLinkActive="active">
                 <a routerLink="/user"><span class="fa fa-cog mr-3"></span> User Settings</a>
             </li>
             <li>
                 <a (click)="logout()"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
-            </li> -->
+            </li>
         </ul>
 
     </nav>
 
     <div id="content-wrapper">
 
-        <nav class="navbar navbar-expand navbar-light bg-light border-bottom">
+        <nav class="navbar navbar-expand navbar-light border-bottom pl-4 pl-md-5">
             <div id="sidebar-toggle" [ngClass]="{'active': sidebarCollapse}"><button type="button" id="sidebar-collapse" class="btn btn-outline-secondary" (click)="toggleSidebar()"></button></div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li ngbDropdown class="nav-item dropdown" >
+                    <!-- <li ngbDropdown class="nav-item dropdown" >
                         <a ngbDropdownToggle class="nav-link p-0 pr-3 dropdown-toggle d-flex align-items-center" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span *ngIf='user.name'>{{user.name}}</span>
                             <span *ngIf='!user.name && user.email'>{{user.email}}</span>
@@ -46,17 +45,27 @@
                             </div>
                         </a>
                         <div ngbDropdownMenu  class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <a class="dropdown-item c-pointer" routerLink="/user" routerLinkActive="active"><span class="fa fa-user mr-3"></span>My profile</a>
-                          <a class="dropdown-item c-pointer" (click)="logout()"><span class="fa fa-sign-out mr-3"></span>Logout</a>
+                            <a class="dropdown-item c-pointer" routerLink="/user" routerLinkActive="active"><span class="fa fa-user mr-3"></span>My profile</a>
+                            <a class="dropdown-item c-pointer" (click)="logout()"><span class="fa fa-sign-out mr-3"></span>Logout</a>
                         </div>
-                      </li>
+                    </li> -->
+                    <li class="nav-item dropdown" >
+                        <a class="nav-link p-0 pr-3 d-flex align-items-center">
+                            <span *ngIf='user.name'>{{user.name}}</span>
+                            <span *ngIf='!user.name && user.email'>{{user.email}}</span>
+                            <div class="d-inline-block pl-3">
+                                <img class="user-profile-img" [src]="user.image" *ngIf="user.image" alt="User image">
+                                <img class="user-profile-img" src="assets/images/account.svg" *ngIf="!user.image" alt="User image">
+                            </div>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
 
         <!-- Page Content -->
-        <div id="content" class="p-4 p-md-5 pt-5">
-            <h2>{{ pageTitle }}</h2>
+        <div id="content" class="p-4 p-md-5">
+            <h2 class="mb-4">{{ pageTitle }}</h2>
             <router-outlet></router-outlet>
         </div>
     </div>

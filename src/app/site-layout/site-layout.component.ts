@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
+
+import { take } from 'rxjs/internal/operators/take';
+import { Subscription, Observable } from 'rxjs';
 import 'rxjs/add/operator/filter';
 
 import { AuthService } from '@app/core/auth/auth.service';
+import { UploadService } from '@app/core/upload/upload.service';
 import { FirebaseUserModel } from '@app/core/user/user.model';
 
 @Component({
@@ -13,17 +16,24 @@ import { FirebaseUserModel } from '@app/core/user/user.model';
 })
 export class SiteLayoutComponent implements OnInit, OnDestroy {
 
-  sidebarCollapse: boolean = false;
   user: FirebaseUserModel = new FirebaseUserModel();
+  userSub: Subscription;
+
+  sidebarCollapse: boolean = false;
+
   pageTitle: string;
-  subscription: Subscription;
+  pageTitleSub: Subscription;
+
+  uploadsNum: number;
+  uploadsNumSub: Subscription;
 
   constructor(
     public authService: AuthService,
+    public uploadService: UploadService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.subscription = this.router.events
+    this.pageTitleSub = this.router.events
     .filter(event => event instanceof NavigationEnd)
     .subscribe(
         () => {
@@ -33,16 +43,21 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe(routeData => {
+    this.userSub = this.route.data.subscribe(routeData => {
       let data = routeData['data'];
       if (data) {
         this.user = data;
       }
     })
+    this.uploadsNumSub = this.uploadService.getFileUploadsNumber().subscribe(res => {
+      this.uploadsNum = res;
+    })
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.pageTitleSub.unsubscribe();
+    this.uploadsNumSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
   toggleSidebar = () => {

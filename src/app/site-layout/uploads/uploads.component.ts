@@ -1,72 +1,56 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
-import { map } from 'rxjs/operators/map';
-import { Observable } from 'rxjs';
-
-import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import { AngularFireDatabase } from '@angular/fire/database';
-
-export class FileUpload {
- 
-  $key: string;
-  name: string;
-  url: string;
-  file: File;
- 
-  constructor(file: File) {
-    this.file = file;
-  }
-}
+import { UploadService } from '@app/core/upload/upload.service';
+import { FileUpload } from '@app/core/upload/fileupload.model';
+import { Observable, Subscription } from 'rxjs';
+import { AngularFireUploadTask } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-uploads',
   templateUrl: './uploads.component.html',
   styleUrls: ['./uploads.component.scss']
 })
+
 export class UploadsComponent implements OnInit {
 
-  uploadProgress: Observable<number>;
-  uploadState: Observable<string>;
-  fileUploads: any;
+  uploadProgress: number;
+  uploadProgressSub: Subscription;
 
-  ref: AngularFireStorageReference;
-  task: AngularFireUploadTask;
+  uploadState: string;
+  uploadStateSub: Subscription;
 
-  private basePath = '/csv_uploads';
+  fileUploads: FileUpload[] = [];
+  fileUploadsSub: Subscription;
 
   constructor(
-    private afStorage: AngularFireStorage,
-    private db: AngularFireDatabase,
+    private uploadService: UploadService,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.getFileUploads();
-    //console.log(this.fileUploads);
+    this.getUploadedFiles();
+  }  
+
+  ngOnDestroy(): void {
+    this.fileUploadsSub.unsubscribe();
   }
-
-  getFileUploads(): any {
-    // Create a reference under which you want to list
-    let storageRef = this.afStorage.ref(this.basePath);
-
-    storageRef.listAll().toPromise().then(
-      r => {
-        this.fileUploads = r.items;
-        console.log(this.fileUploads);
-      }
-    ).catch( error => {
-        alert('error fetching data: ' + error);
-    });
-
-  }
-
+ 
   uploadFile(event) {
-    //const id = Math.random().toString(36).substring(2);
-    //this.ref = this.afStorage.ref(`${this.basePath}/${id}`);
-    this.ref = this.afStorage.ref(`${this.basePath}/${event.target.files[0].name}`);
-    this.task = this.ref.put(event.target.files[0]);
-    this.uploadProgress = this.task.percentageChanges();
-    this.uploadState = this.task.snapshotChanges().pipe(map(s => s.state));
+    this.uploadService.uploadFile(event.target.files[0]);
+    this.uploadProgressSub = this.uploadService.getUploadProgress().subscribe((res) => {
+      this.uploadProgress = res;
+      if(this.uploadProgress == 100) {
+        this.getUploadedFiles();
+      }
+    });
+    this.uploadStateSub = this.uploadService.getUploadState().subscribe((res) => {
+      this.uploadState = res;
+    });
   }
 
+  getUploadedFiles() {
+    this.fileUploadsSub = this.uploadService.getFileUploads().subscribe((data) => {
+      this.fileUploads = data;
+    });
+  }
 }

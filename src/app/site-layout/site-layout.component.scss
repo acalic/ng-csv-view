@@ -66,7 +66,7 @@ h5,
 #sidebar {
     min-width: 300px;
     max-width: 300px;
-    background: #32373d;
+    background: rgba($color-secondary, 1);
     color: #fff;
     transition: all 0.3s;
     position: relative;
@@ -114,7 +114,7 @@ h5,
                             width: 12px;
                             height: 12px;
                             content: "";
-                            background: #ff0000ab;
+                            background: $color-red;
                             border-radius: 50%;
                             font-family: $font-primary;
                             font-size: 9px;
@@ -124,8 +124,7 @@ h5,
                 }
                 &:hover {
                     color: $white;
-                    background: $color-primary;
-                    border-bottom: 1px solid $color-primary;
+                    background: rgba($color-primary, 0.3);
                 }
             }
             &.active {
@@ -133,8 +132,7 @@ h5,
                     background: transparent;
                     color: $white;
                     &:hover {
-                        background: $color-primary;
-                        border-bottom: 1px solid $color-primary;
+                        background: rgba($color-primary, 0.3);
                     }
                 }
             }
@@ -180,7 +178,7 @@ h5,
     cursor: pointer;
 }
 
-.bg-wrap {
+.sidebar-header {
     width: 100%;
     position: relative;
     z-index: 0;
@@ -195,10 +193,12 @@ h5,
         background: $black;
         opacity: 0.3;
     }
-    .user-profile-container {
+    &-container {
         h3 {
             color: $white;
             font-size: 18px;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
         }
     }
 }
