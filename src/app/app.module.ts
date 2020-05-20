@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { rootRouterConfig } from './app.routes';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; 
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 /* Firebase */
 import { AngularFireModule } from '@angular/fire';
@@ -56,7 +57,7 @@ import { UploadsComponent } from './site-layout/uploads/uploads.component';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
   ],
-  providers: [AuthService, UserService, UserResolver, AuthGuard],
+  providers: [AuthService, UserService, UserResolver, AuthGuard, NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

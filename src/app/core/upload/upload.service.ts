@@ -19,6 +19,8 @@ export class UploadService {
   uploadProgress: Observable<number>
   uploadState: Observable<string>
 
+  fileUploadsNum: number;
+
   private basePath = '/csv_uploads';
   private storageRef = this.afStorage.ref(this.basePath);
 
@@ -34,7 +36,8 @@ export class UploadService {
 
   getFileUploadsNumber(): Observable<number> {
     return this.storageRef.listAll().map(res => {
-      return res.items.length;
+      this.fileUploadsNum = res.items.length;
+      return this.fileUploadsNum;
     })
   }
 
@@ -47,6 +50,10 @@ export class UploadService {
     this.uploadState = this.task.snapshotChanges().pipe(map(s => s.state));
   }
 
+  deleteFile(file: any) {
+    return file.delete();
+  }
+
   getUploadProgress(): Observable<number> {
     return this.uploadProgress;
   }
@@ -54,8 +61,4 @@ export class UploadService {
   getUploadState(): Observable<string> {
     return this.uploadState;
   }
-
-  /* getCurrentUploadTask(): Observable<any> {
-    return this.task;
-  } */
 }
