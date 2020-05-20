@@ -32,8 +32,8 @@
             <li class="list-group-item" *ngFor="let file of fileUploads">
                 <span>{{ file.name }}</span>
                 <div class="pull-right">
-                    <button class="btn btn-sm btn-info">View</button>
-                    <button class="btn btn-sm btn-danger ml-2" (click)="openConfirmDeleteModal(confirmDeleteModal, file)">Delete</button>
+                    <button class="btn btn-sm btn-primary">View</button>
+                    <button class="btn btn-sm btn-secondary ml-2" (click)="openConfirmDeleteModal(confirmDeleteModal, file)">Delete</button>
                 </div>
             </li>
         </ul>

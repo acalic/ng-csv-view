@@ -8,7 +8,6 @@
   <div class="form-group mb-4">
     <label for="password" class="sr-only">Password</label>
     <input type="password" formControlName="password" name="password" class="form-control" placeholder="***********">
-    <!-- <label class="text-danger">{{errorMessage}}</label> -->
   </div>
   <button type="submit" class="btn btn-lg btn-block btn-primary" (click)="tryLogin(loginForm.value)">Login</button>
   <button type="button" class="btn btn-lg btn-block btn-secondary d-flex align-items-center justify-content-center" (click)="tryGoogleLogin()">

@@ -124,15 +124,18 @@ h5,
                 }
                 &:hover {
                     color: $white;
-                    background: rgba($color-primary, 0.3);
+                    //background: rgba($color-primary, 0.3);
                 }
             }
             &.active {
                 > a {
                     background: transparent;
-                    color: $white;
+                    color: lighten($color-primary, 0.7);
+                    .fa {
+                        color: rgba(255, 255, 255, 0.6);
+                    }
                     &:hover {
-                        background: rgba($color-primary, 0.3);
+                        //background: rgba($color-primary, 0.3);
                     }
                 }
             }
