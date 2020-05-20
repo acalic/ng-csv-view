@@ -8,11 +8,17 @@
   <div class="form-group mb-4">
     <label for="password" class="sr-only">Password</label>
     <input type="password" formControlName="password" name="password" class="form-control" placeholder="***********">
-    <label class="text-danger">{{errorMessage}}</label>
+    <!-- <label class="text-danger">{{errorMessage}}</label> -->
   </div>
-  <button type="submit" class="btn btn-lg btn-block btn-dark" (click)="tryLogin(loginForm.value)">Login</button>
-  <button type="button" class="btn btn-lg btn-block btn-danger" (click)="tryGoogleLogin()">Login with Google</button>
+  <button type="submit" class="btn btn-lg btn-block btn-primary" (click)="tryLogin(loginForm.value)">Login</button>
+  <button type="button" class="btn btn-lg btn-block btn-secondary d-flex align-items-center justify-content-center" (click)="tryGoogleLogin()">
+    <img src="assets/images/google-icon.svg" alt="logo" class="logo mr-2">
+    <span>Login with Google</span>
+  </button>
 </form>
 <!-- <a href="#!" class="forgot-password-link">Forgot password?</a> -->
 <p class="text-muted mt-4">Don't have an account? <a routerLink="/register">Register here</a></p>
-    
+
+<div *ngIf="errorMessage" class="alert alert-danger fade-in" role="alert">
+  {{errorMessage}}
+</div>

@@ -8,6 +8,21 @@
 
 .landing {
     min-height: 100vh;
+
+    &-main-img-container {
+        &::before {
+            content: ""; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: .95;
+            //background: rgba($color-primary, 0.7);
+            background-image: linear-gradient(to right top, #10ac8a, #008c8b, #006b7d, #174c61, #222f3e);
+            background-image: linear-gradient(to right, #10ac8a, #008c8b, #006b7d, #174c61, #222f3e);
+        }
+    }
     
     &-main-img {
         width: 100%;

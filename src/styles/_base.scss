@@ -1,4 +1,9 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
 @import 'variables';
+@import 'mixins';
 
 h3 {
     font-size: 25px;
@@ -16,13 +21,20 @@ a {
     font-size: 1rem;
 }
 
+.btn-primary {
+    @include button-variant($color-primary, $color-primary, $white);
+}
+
+.btn-secondary {
+    @include button-variant($color-secondary, $color-secondary, $white);
+}
+
 input {
     border: 1px solid #d5dae2;
     padding: 15px 25px;
     margin-bottom: 20px;
     min-height: 45px;
     font-size: 13px;
-    //line-height: 1.5;
     font-weight: normal;
 
     &::placeholder {
@@ -32,4 +44,8 @@ input {
 
 .text-muted {
     color: #919aa3;
+}
+
+.fade-in {
+    @include fadein();
 }
