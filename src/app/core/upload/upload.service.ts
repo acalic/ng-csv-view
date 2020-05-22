@@ -41,6 +41,18 @@ export class UploadService {
     })
   }
 
+  getUploadProgress(): Observable<number> {
+    return this.uploadProgress;
+  }
+
+  getUploadState(): Observable<string> {
+    return this.uploadState;
+  }
+
+  getFileDownloadUrl(file: any): Observable<string> {
+    return file.getDownloadURL();
+  }
+
   uploadFile(fileUpload: FileUpload) {
     //const id = Math.random().toString(36).substring(2);
     //this.ref = this.afStorage.ref(`${this.basePath}/${id}`);
@@ -52,13 +64,5 @@ export class UploadService {
 
   deleteFile(file: any) {
     return file.delete();
-  }
-
-  getUploadProgress(): Observable<number> {
-    return this.uploadProgress;
-  }
-
-  getUploadState(): Observable<string> {
-    return this.uploadState;
   }
 }
