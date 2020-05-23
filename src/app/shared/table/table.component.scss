@@ -1,4 +1,4 @@
-/* Sortable table demo */
+@import 'variables';
 
 th[sortable] {
   cursor: pointer;
@@ -20,4 +20,17 @@ th[sortable].desc:before, th[sortable].asc:before {
 th[sortable].desc:before {
   transform: rotate(180deg);
   -ms-transform: rotate(180deg);
+}
+
+::ng-deep .page-link {
+  color: $color-primary;
+
+  &:hover {
+    color: darken($color-primary, 20%)
+  }
+}
+
+::ng-deep .page-item.active .page-link {
+  background-color: $color-primary;
+  border-color: $color-primary;
 }

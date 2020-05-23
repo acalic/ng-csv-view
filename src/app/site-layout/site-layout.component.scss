@@ -8,8 +8,8 @@
     font-family: $font-primary;
 }
 
-.text {
-    font-size: 14px;
+::ng-deep .text {
+    //font-size: 14px;
     line-height: 1.8;
     font-weight: normal;
     color: lighten($black, 50%);
@@ -97,11 +97,16 @@ h5,
                 }
             }
             a {
+                display: flex;
                 padding: 15px 30px;
                 display: block;
                 color: rgba(255, 255, 255, 0.6);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
                 cursor: pointer;
+
+                span:nth-child(2) {
+                    border-bottom: 1px solid transparent;
+                }
 
                 span {
                     &.notif {
@@ -124,18 +129,22 @@ h5,
                 }
                 &:hover {
                     color: $white;
-                    //background: rgba($color-primary, 0.3);
                 }
             }
             &.active {
                 > a {
+                   
+                    align-items: center;
                     background: transparent;
                     color: lighten($color-primary, 0.7);
+
+                    span:nth-child(2) {
+                        border-bottom-color: lighten($color-primary, 0.7);
+                    }
+
                     .fa {
                         color: rgba(255, 255, 255, 0.6);
-                    }
-                    &:hover {
-                        //background: rgba($color-primary, 0.3);
+                        @include transition(0.3s);
                     }
                 }
             }

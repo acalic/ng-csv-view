@@ -21,6 +21,8 @@ export class UploadsComponent implements OnInit {
   uploadState: string;
   uploadStateSub: Subscription;
 
+  uploadError: string = '';
+
   fileUploads: FileUpload[] = [];
   fileUploadsSub: Subscription;
 
@@ -89,11 +91,7 @@ export class UploadsComponent implements OnInit {
       filePath = url;   
       this._http.get(filePath, {responseType: 'text'}).toPromise().then((data: string) => {
         this.fileData = data;
-        this._cd.detectChanges()
-        this._cd.markForCheck()
       });
     });
   }
-
-  
 }

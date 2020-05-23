@@ -9,21 +9,34 @@
         </div>
         <ul class="list-unstyled mb-5">
             <li routerLinkActive="active">
-                <a routerLink="/home"><span class="fa fa-home mr-3"></span>Home</a>
-            </li>
-            <li routerLinkActive="active">
-                <a routerLink="/uploads"><span class="fa fa-file-text-o mr-3 notif">
-                    <small class="d-flex align-items-center justify-content-center">{{ uploadsNum }}</small></span>My Files
+                <a routerLink="/home">
+                    <span class="fa fa-home mr-3"></span>
+                    <span>Home</span>
                 </a>
             </li>
             <li routerLinkActive="active">
-                <a routerLink="/stats"><span class="fa fa-line-chart mr-3"></span>Statistics</a>
+                <a routerLink="/uploads">
+                    <span class="fa fa-file-text-o mr-3 notif"><small class="d-flex align-items-center justify-content-center">{{ uploadsNum }}</small></span>
+                    <span>My Files</span>
+                </a>
             </li>
             <li routerLinkActive="active">
-                <a routerLink="/user"><span class="fa fa-cog mr-3"></span> User Settings</a>
+                <a routerLink="/stats">
+                    <span class="fa fa-line-chart mr-3"></span>
+                    <span>Statistics</span>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/user">
+                    <span class="fa fa-cog mr-3"></span>
+                    <span>User Settings</span>
+                </a>
             </li>
             <li>
-                <a (click)="logout()"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+                <a (click)="openConfirmSignoutModal(confirmSignout)">
+                    <span class="fa fa-sign-out mr-3"></span>
+                    <span>Sign Out</span>
+                </a>
             </li>
         </ul>
 
@@ -70,3 +83,20 @@
         </div>
     </div>
 </div>
+
+<ng-template #confirmSignout let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Sign Out</h4>
+        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+            (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to sign out?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" (click)="modal.dismiss('cancel')">Cancel</button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('confirm')">Confirm</button>
+    </div>
+</ng-template>

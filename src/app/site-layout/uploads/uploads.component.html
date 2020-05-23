@@ -58,8 +58,8 @@
         <p>Are you sure you want to delete file <b>{{ fileNameDelete }}</b> ?</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel')">Cancel</button>
-        <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('confirm')">Ok</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancel</button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('confirm')">Confirm</button>
     </div>
 </ng-template>
 
@@ -72,7 +72,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <p>{{ fileNameDelete }}</p>
+        <p>{{ uploadError }}</p>
     </div>
     <div class="modal-footer">
         <button type="button" ngbAutofocus class="btn btn-secondary" (click)="modal.dismiss('ok')">Ok</button>

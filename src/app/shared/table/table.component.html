@@ -1,24 +1,44 @@
-<table class="table table-striped">
+
+<form>
+  <div class="form-group col-12 col-md-3 p-0">
+    <label for="table-search">Search table:</label>
+    <input id="table-search" class="form-control" type="text" [formControl]="filter"/>
+  </div>
+</form>
+
+<table class="table table-striped border">
   <thead>
   <tr>
-    <!-- <th scope="col" sortable="guid" (sort)="onSort($event)">guid</th>
-    <th scope="col" sortable="name" (sort)="onSort($event)">name</th>
-    <th scope="col" sortable="email" (sort)="onSort($event)">email</th>
-    <th scope="col" sortable="age" (sort)="onSort($event)">age</th>
-    <th scope="col" sortable="date" (sort)="onSort($event)">date</th> -->
-    <th scope="col" sortable [sortable]="column.key" (sort)="onSort($event)" *ngFor="let column of formattedTableData[0] | keyvalue"> {{ column.key }} </th>
+    <th scope="col" [sortable]="column.key" (sort)="onSort($event)" *ngFor="let column of rows[0] | keyvalue : originalOrder"> {{ column.key }} </th>
   </tr>
   </thead>
   <tbody>
-  <!-- <tr *ngFor="let row of tableData">
-    <th scope="row">{{ row.guid }}</th>
-    <td>{{ row.name }}</td>
-    <td>{{ row.email }}</td>
-    <td>{{ row.age }}</td>
-    <td>{{ row.date | date }}</td>
-  </tr> -->
-  <tr *ngFor="let row of formattedTableData">
-    <td *ngFor="let column of row | keyvalue">{{ column.value }}</td>
-  </tr>
+  <ng-container *ngIf="!filteredFormattedTableData; else filteredResults">
+    <tr *ngFor="let row of rows">
+      <td *ngFor="let column of row | keyvalue : originalOrder">
+        <ngb-highlight [result]="column.value" [term]="filter.value"></ngb-highlight>
+      </td>
+    </tr>
+  </ng-container>
+  <ng-template #filteredResults>
+    <tr *ngFor="let row of filteredRows">
+      <td *ngFor="let column of row | keyvalue : originalOrder">
+        <ngb-highlight [result]="column.value" [term]="filter.value"></ngb-highlight>
+      </td>
+    </tr>
+  </ng-template>
   </tbody>
 </table>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+  </ngb-pagination>
+
+  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+    <option [ngValue]="5">5 items per page</option>
+    <option [ngValue]="10">10 items per page</option>
+    <option [ngValue]="20">20 items per page</option>
+    <option [ngValue]="50">50 items per page</option>
+    <option [ngValue]="100">100 items per page</option>
+  </select>
+</div>

@@ -1,23 +1,12 @@
-import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren, OnInit } from '@angular/core';
+import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren, OnInit, PipeTransform } from '@angular/core';
+import { KeyValue, DecimalPipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
+import { map, startWith } from "rxjs/operators";
 
 enum DataDelimiters {
   Semicolon = ';',
   Colon = ','
 }
-
-/* interface Row {
-  guid: string;
-  name: string;
-  first: string;
-  last: string;
-  email: string;
-  value: string;
-  date: string;
-  phone: string;
-  age: string;
-  state: string;
-  street: string;
-} */
 
 //export type SortColumn = keyof Row | '';
 export type SortColumn = '';
@@ -63,17 +52,45 @@ export class TableComponent implements OnInit {
 
   @ViewChildren(TableSortableHeaderComponent) headers: QueryList<TableSortableHeaderComponent>;
 
-  formattedTableData: any[];
+  formattedTableData: any;
+  filteredFormattedTableData: any;
+
+  page = 1;
+  pageSize = 5;
+  collectionSize: number;
+
+  filter = new FormControl('');
+
+  constructor(
+    public pipe: DecimalPipe
+  ) {
+      this.filter.valueChanges.subscribe(value => {
+        this.filteredFormattedTableData = this.search(value, this.pipe)
+        this.collectionSize = this.filteredFormattedTableData.length;
+      });
+    }
 
   ngOnInit() {
     this.formatData(this.tableData);
   }
 
+  search(text: string, pipe: PipeTransform): any {
+    const term = text.toLowerCase();
+    return this.formattedTableData.filter(item =>
+      Object.keys(item).some(
+        k =>
+          item[k] != null &&
+          item[k]
+            .toString()
+            .toLowerCase()
+            .includes(term.toLowerCase())
+      )
+    );
+  }
+
   onSort({column, direction}: SortEvent) {
 
     let initialTableData = this.formattedTableData;  
-
-    console.log(direction);
 
     // resetting other headers
     this.headers.forEach(header => {
@@ -111,14 +128,24 @@ export class TableComponent implements OnInit {
 
             for ( var j = 0; j < headers.length; j++) {
               columnObj[headers[j]] = data[j];
+              //console.log(headers[j])
             }
             lines.push(columnObj);
         }
       }
-
       this.formattedTableData = lines;
-      console.log(this.formattedTableData);
+      this.collectionSize = this.formattedTableData.length;
   };
+
+  get rows(): any[] {
+    return this.formattedTableData
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
+  get filteredRows(): any[] {
+    return this.filteredFormattedTableData
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
 
   getDelimiter(str: string) {
     let a = str.split(DataDelimiters.Semicolon)
@@ -127,4 +154,18 @@ export class TableComponent implements OnInit {
     return a.length > b.length ? DataDelimiters.Semicolon : DataDelimiters.Colon;
   }
 
+  // Preserve original property order
+  originalOrder = (a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
+    return 0;
+  }
+
+  // Order by ascending property value
+  valueAscOrder = (a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
+    return a.value.localeCompare(b.value);
+  }
+
+  // Order by descending property key
+  keyDescOrder = (a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
+    return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+  }
 }

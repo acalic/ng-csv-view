@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { rootRouterConfig } from './app.routes';
@@ -75,6 +75,7 @@ import { HttpErrorInterceptor } from '@app/core/http-error.interceptor';
     UserResolver,
     AuthGuard,
     NgbActiveModal,
+    DecimalPipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

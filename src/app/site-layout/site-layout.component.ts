@@ -1,13 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ɵConsole } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
-import { take } from 'rxjs/internal/operators/take';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import 'rxjs/add/operator/filter';
 
 import { AuthService } from '@app/core/auth/auth.service';
 import { UploadService } from '@app/core/upload/upload.service';
 import { FirebaseUserModel } from '@app/core/user/user.model';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-site-layout',
@@ -30,20 +31,21 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
   constructor(
     public authService: AuthService,
     public uploadService: UploadService,
-    private router: Router,
-    private route: ActivatedRoute,
+    private _modalService: NgbModal,
+    private _route: ActivatedRoute,
+    private _router: Router,
   ) {
-    this.pageTitleSub = this.router.events
+    this.pageTitleSub = this._router.events
     .filter(event => event instanceof NavigationEnd)
     .subscribe(
         () => {
-          this.pageTitle = this.route.snapshot.firstChild.data['title'];
+          this.pageTitle = this._route.snapshot.firstChild.data['title'];
         }
     );
   }
 
   ngOnInit(): void {
-    this.userSub = this.route.data.subscribe(routeData => {
+    this.userSub = this._route.data.subscribe(routeData => {
       let data = routeData['data'];
       if (data) {
         this.user = data;
@@ -64,13 +66,23 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
     this.sidebarCollapse = !this.sidebarCollapse;
   }
 
-  logout(){
+  logout() {
     this.authService.doLogout()
     .then((res) => {
-      this.router.navigate(['/login']);
+      setTimeout(() => {
+        this._router.navigate(['/login']);
+      }, 1000);
     }, (error) => {
       console.log("Logout error", error);
     });
+  }
+
+  openConfirmSignoutModal(content: any) {
+    this._modalService.open(content).result.then((result) => {
+      if(result == 'confirm') {
+        this.logout()
+      }
+    }, (reason) => {});
   }
 
 }
