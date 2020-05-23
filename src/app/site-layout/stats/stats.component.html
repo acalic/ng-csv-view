@@ -1,1 +1,21 @@
-<p>stats works!</p>
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-4" *ngIf="fileUploads.length">
+        <ul class="list-group list-file-uploads" >
+            <li class="list-group-item d-flex align-items-center justify-content-between" *ngFor="let file of fileUploads">
+                <span><a>{{ file.name }}</a></span>
+                <span>{{ file.size }}</span>
+                <button class="btn btn-sm btn-primary">View</button>
+            </li>
+        </ul>
+    </div>
+    <div class="card mx-3" *ngIf="!fileUploads.length && !fileUploadsLoading">
+        <div class="card-body d-flex align-items-center justify-content-space-between">
+            <i class="fa fa-info-circle mr-3"></i>
+            <div>
+                <span class="d-block">There are no files uploaded yet.</span>
+                <span>Go to <a routerLink="/uploads">My Files</a> to upload a file.</span>
+            </div>
+        </div>
+    </div>
+</div>
+

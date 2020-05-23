@@ -25,6 +25,7 @@ export class UploadsComponent implements OnInit {
 
   fileUploads: FileUpload[] = [];
   fileUploadsSub: Subscription;
+  fileUploadsLoading: boolean = true;
 
   closeResult: string = '';
   fileNameDelete: string = '';
@@ -50,8 +51,10 @@ export class UploadsComponent implements OnInit {
   }
 
   getUploadedFiles() {
+    this.fileUploadsLoading = true;
     this.fileUploadsSub = this._uploadService.getFileUploads().subscribe((data: FileUpload[]) => {
       this.fileUploads = data;
+      this.fileUploadsLoading = false;
       this._cd.markForCheck();
     });
   }

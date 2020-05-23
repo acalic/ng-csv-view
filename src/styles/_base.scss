@@ -13,7 +13,11 @@ h3 {
 }
 
 a {
-    color: $color-blue;
+    color: $color-primary;
+
+    &:hover {
+        color: darken($color-primary, 10%);
+    }
 }
 
 .btn-lg {
@@ -34,6 +38,7 @@ input {
     padding: 15px 25px;
     margin-bottom: 20px;
     min-height: 45px;
+    max-width: 100%;
     font-size: 13px;
     font-weight: normal;
 

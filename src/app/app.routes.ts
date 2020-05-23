@@ -33,14 +33,14 @@ export const rootRouterConfig: Routes = [
       component: SiteLayoutComponent,
       resolve: { data: UserResolver},
       children: [
-        { path: 'home', component: HomeComponent, data : {title : 'Welcome home!'}},
-        { path: 'uploads', component: UploadsComponent, data : {title : 'Uploads'}},
-        { path: 'stats', component: StatsComponent, data : {title : 'Statistics'}},
-        { path: 'user', component: UserComponent, resolve: { data: UserResolver}, data : {title : 'User settings'}}
+        { path: 'home', component: HomeComponent, data : { title : 'Welcome home!' }},
+        { path: 'uploads', component: UploadsComponent, data : { title : 'My files' }},
+        { path: 'stats', component: StatsComponent, data : { title : 'Reports' }},
+        { path: 'user', component: UserComponent, resolve: { data: UserResolver}, data : { title : 'User settings' }}
       ]
   },
 
   // No layout routes
   // TODO: ADD 404 page!
-  /* { path: '', redirectTo: 'login', pathMatch: 'full' }, */
+  { path: '**', redirectTo: 'home' }
 ];

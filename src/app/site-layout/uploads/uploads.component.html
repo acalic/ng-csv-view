@@ -5,6 +5,7 @@
                 Select a file for upload
             </div>
             <div class="card-body">
+                <label class="d-block text-muted small">Only CSV file types supported</label>
                 <input type="file" (change)="uploadFile($event)" accept=".csv" />
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
@@ -29,8 +30,8 @@
         </div>
     </div>
     <div class="col-12 col-md-8 mt-3 mt-md-0">
-        <ul class="list-group" *ngIf="fileUploads">
-            <li class="list-group-item" *ngFor="let file of fileUploads">
+        <ul class="list-group list-file-uploads" *ngIf="fileUploads">
+            <li class="list-group-item d-flex align-items-center justify-content-between" *ngFor="let file of fileUploads">
                 <span>{{ file.name }}</span>
                 <span>{{ file.size }}</span>
                 <div class="pull-right">
@@ -40,6 +41,9 @@
                 </div>
             </li>
         </ul>
+        <div class="card" *ngIf="!fileUploads.length && !fileUploadsLoading">
+            <div class="card-body">There are no files uploaded yet.</div>
+        </div>
     </div>
     <div class="col-12 mt-5">
         <app-table *ngIf="fileData" [tableData]="fileData"></app-table>
