@@ -16,7 +16,7 @@
   <ng-container *ngIf="!filteredFormattedTableData; else filteredResults">
     <tr *ngFor="let row of rows">
       <td *ngFor="let column of row | keyvalue : originalOrder">
-        <ngb-highlight [result]="column.value" [term]="filter.value"></ngb-highlight>
+        <ngb-highlight [ngClass]="{'text-danger': column.value === 'BLANK'}" [result]="column.value" [term]="filter.value"></ngb-highlight>
       </td>
     </tr>
   </ng-container>

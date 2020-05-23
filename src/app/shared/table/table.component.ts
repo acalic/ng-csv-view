@@ -127,8 +127,8 @@ export class TableComponent implements OnInit {
             let columnObj = {};
 
             for ( var j = 0; j < headers.length; j++) {
+              if(headers[j] === 'state' && data[j] === '') data[j] = 'BLANK';
               columnObj[headers[j]] = data[j];
-              //console.log(headers[j])
             }
             lines.push(columnObj);
         }
