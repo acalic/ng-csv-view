@@ -1,10 +1,14 @@
+/* Angular stuff */
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+
 import { rootRouterConfig } from './app.routes';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { ChartsModule } from 'ng2-charts';
 
 /* NG Bootstrap */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; 
@@ -62,6 +66,7 @@ import { HttpErrorInterceptor } from '@app/core/http-error.interceptor';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
+    ChartsModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: false }),
 
     // Firebase modules

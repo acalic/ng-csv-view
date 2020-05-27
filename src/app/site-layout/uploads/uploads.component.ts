@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
 import { UploadService } from '@app/core/upload/upload.service';
 import { FileUpload } from '@app/core/upload/fileupload.model';
+import { CsvOperationsService } from '@app/core/csv.service';
 
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -32,7 +33,10 @@ export class UploadsComponent implements OnInit {
 
   fileData: string;
 
+  @ViewChild('errorModal') private errorModal;
+
   constructor(
+    private _csvOperations: CsvOperationsService,
     private _uploadService: UploadService,
     private _modalService: NgbModal,
     private _cd: ChangeDetectorRef,
@@ -60,16 +64,29 @@ export class UploadsComponent implements OnInit {
   }
 
   uploadFile(event) {
-    this._uploadService.uploadFile(event.target.files[0]);
-    this.uploadProgressSub = this._uploadService.getUploadProgress().subscribe((res) => {
-      this.uploadProgress = res;
-      if(this.uploadProgress == 100) {
-        this.getUploadedFiles();
+    let file = event.target.files[0];
+    
+    this._csvOperations.validateCsvFormat(file).then((isValidFile) => {
+      if(isValidFile){
+        this._uploadService.uploadFile(file);
+        this.uploadProgressSub = this._uploadService.getUploadProgress().subscribe((res) => {
+          this.uploadProgress = res;
+          if(this.uploadProgress == 100) {
+            this.getUploadedFiles();
+          }
+        });
+        this.uploadStateSub = this._uploadService.getUploadState().subscribe((res) => {
+          this.uploadState = res;
+        });
+      }else {
+        this.uploadError = 'Invalid file content! The file must be in CSV format.';
+        this.openErrorModal();
       }
     });
-    this.uploadStateSub = this._uploadService.getUploadState().subscribe((res) => {
-      this.uploadState = res;
-    });
+  }
+
+  openErrorModal() {
+    this._modalService.open(this.errorModal);
   }
 
   openConfirmDeleteModal(content: any, file: any) {
@@ -88,11 +105,9 @@ export class UploadsComponent implements OnInit {
 
   readCSV(file: any) {
     this.fileData = null;
-    let filePath: string;
 
     file.getDownloadURL().then((url: string) => {
-      filePath = url;   
-      this._http.get(filePath, {responseType: 'text'}).toPromise().then((data: string) => {
+      this._http.get(url, {responseType: 'text'}).toPromise().then((data: string) => {
         this.fileData = data;
       });
     });

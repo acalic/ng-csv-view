@@ -3,6 +3,8 @@ import { KeyValue, DecimalPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from "rxjs/operators";
 
+import { CsvOperationsService } from '@app/core/csv.service';
+
 enum DataDelimiters {
   Semicolon = ';',
   Colon = ','
@@ -62,7 +64,8 @@ export class TableComponent implements OnInit {
   filter = new FormControl('');
 
   constructor(
-    public pipe: DecimalPipe
+    public pipe: DecimalPipe,
+    private _csvOperations: CsvOperationsService
   ) {
       this.filter.valueChanges.subscribe(value => {
         this.filteredFormattedTableData = this.search(value, this.pipe)
@@ -112,21 +115,21 @@ export class TableComponent implements OnInit {
 
   formatData(allText) {
     // split content based on new line
-    var allTextLines = allText.split(/\r\n|\n/);
+    let allTextLines = allText.split(/\r\n|\n/);
 
-    let delimiter = this.getDelimiter(allTextLines[0]);
+    let delimiter = this._csvOperations.getDelimiter(allTextLines[0]);
 
-    var headers = allTextLines[0].split(delimiter);
-    var lines = [];
+    let headers = allTextLines[0].split(delimiter);
+    let lines = [];
 
-    for ( var i = 1; i < allTextLines.length; i++) {
+    for ( let i = 1; i < allTextLines.length; i++) {
         // split content based on delimiter
         let data = allTextLines[i].split(delimiter);
 
         if (data.length == headers.length) {
             let columnObj = {};
 
-            for ( var j = 0; j < headers.length; j++) {
+            for ( let j = 0; j < headers.length; j++) {
               if(headers[j] === 'state' && data[j] === '') data[j] = 'BLANK';
               columnObj[headers[j]] = data[j];
             }
@@ -145,13 +148,6 @@ export class TableComponent implements OnInit {
   get filteredRows(): any[] {
     return this.filteredFormattedTableData
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-  }
-
-  getDelimiter(str: string) {
-    let a = str.split(DataDelimiters.Semicolon)
-    let b = str.split(DataDelimiters.Colon)
-
-    return a.length > b.length ? DataDelimiters.Semicolon : DataDelimiters.Colon;
   }
 
   // Preserve original property order
