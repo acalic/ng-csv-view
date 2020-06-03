@@ -56,17 +56,16 @@ export class UploadsComponent implements OnInit {
 
   getUploadedFiles() {
     this.fileUploadsLoading = true;
-    this.fileUploadsSub = this._uploadService.getFileUploads().subscribe((data: FileUpload[]) => {
+    this.fileUploadsSub = this._uploadService.getFileUploads().subscribe((data: any) => {
       this.fileUploads = data;
       this.fileUploadsLoading = false;
 
-      this.fileUploads.forEach(element => {
+      data.forEach(element => {
         element.getMetadata().then((metadata) => {
           element.originalName = metadata.customMetadata.originalName;
         })
       });
-
-      //this._cd.markForCheck();
+      this.fileUploads = data;
     });
   }
 
