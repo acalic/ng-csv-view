@@ -39,6 +39,7 @@ import { SiteLayoutComponent } from '@app/site-layout/site-layout.component';
 import { UserComponent } from '@app/site-layout/user/user.component';
 import { HomeComponent } from '@app/site-layout/home/home.component';
 import { StatsComponent } from '@app/site-layout/stats/stats.component';
+import { StatsItemComponent } from '@app/site-layout/stats/stats-item/stats-item.component';
 import { UploadsComponent } from '@app/site-layout/uploads/uploads.component';
 import { TableComponent, TableSortableHeaderComponent } from '@app/shared/table/table.component';
 
@@ -57,6 +58,7 @@ import { HttpErrorInterceptor } from '@app/core/http-error.interceptor';
     UserComponent,
     TableComponent,
     TableSortableHeaderComponent,
+    StatsItemComponent,
   ],
   imports: [
     CommonModule,

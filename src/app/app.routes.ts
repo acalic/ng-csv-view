@@ -11,6 +11,7 @@ import { UserResolver } from '@app/site-layout/user/user.resolver';
 import { HomeComponent } from '@app/site-layout/home/home.component';
 import { UploadsComponent } from '@app/site-layout/uploads/uploads.component';
 import { StatsComponent } from '@app/site-layout/stats/stats.component';
+import { StatsItemComponent } from '@app/site-layout/stats/stats-item/stats-item.component';
 
 import { AuthGuard } from '@app/core/auth/auth.guard';
 
@@ -36,6 +37,7 @@ export const rootRouterConfig: Routes = [
         { path: 'home', component: HomeComponent, data : { title : 'Welcome home!' }},
         { path: 'uploads', component: UploadsComponent, data : { title : 'My files' }},
         { path: 'stats', component: StatsComponent, data : { title : 'Reports' }},
+        { path: 'stats/:name', component: StatsItemComponent, data : { title : 'Reports' }},
         { path: 'user', component: UserComponent, resolve: { data: UserResolver}, data : { title : 'User settings' }}
       ]
   },

@@ -1,0 +1,88 @@
+<div *ngIf="fileData && !isLoading && !error; else loading">
+    <button class="btn btn-secondary" routerLink="/stats">
+        <span class="fa fa-arrow-left mr-2"></span>
+        <span>Go Back</span>
+    </button>
+    <div class="row">
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body bg-success">
+                    <div class="rotate">
+                        <i class="fa fa-list fa-4x"></i>
+                    </div>
+                    <h6 class="text-uppercase">Total records</h6>
+                    <h1 class="display-4">{{ totalRecords }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body bg-info">
+                    <div class="rotate">
+                        <i class="fa fa-calendar fa-4x"></i>
+                    </div>
+                    <h6 class="text-uppercase">Newest entry</h6>
+                    <h1>{{ lastDate | date : undefined : undefined : 'en-US' }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card text-white bg-danger h-100">
+                <div class="card-body bg-danger">
+                    <div class="rotate">
+                        <i class="fa fa-exclamation-circle fa-4x"></i>
+                    </div>
+                    <h6 class="text-uppercase">Empty State records</h6>
+                    <h1 class="display-4">{{ totalEmptyStateVals }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <div class="rotate">
+                        <i class="fa fa-user fa-4x"></i>
+                    </div>
+                    <h6 class="text-uppercase">AVG age of users</h6>
+                    <h1 class="display-4">{{ totalAverageAge | number: '1.0-0' }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-6" *ngIf="barChartLabels.length">
+            <canvas
+                baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+          </canvas>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <div class="d-flex align-items-center text-info">
+        <span>Generating reports...</span>
+        <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>
+    </div>
+</ng-template>
+
+<ng-template #errorModal let-modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Error</h4>
+        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+            (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p class="text-danger">{{ error }}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ngbAutofocus class="btn btn-secondary" (click)="modal.dismiss('ok')" routerLink="/stats">Ok</button>
+    </div>
+</ng-template>

@@ -30,19 +30,27 @@
         </div>
     </div>
     <div class="col-12 col-md-8 mt-3 mt-md-0">
-        <ul class="list-group list-file-uploads" *ngIf="fileUploads">
-            <li class="list-group-item d-flex align-items-center justify-content-between" *ngFor="let file of fileUploads">
-                <span>{{ file.name }}</span>
-                <span>{{ file.size }}</span>
-                <div class="pull-right">
-                    <button class="btn btn-sm btn-primary ml-2" (click)="readCSV(file)">View</button>
-                    <button class="btn btn-sm btn-secondary ml-2"
-                        (click)="openConfirmDeleteModal(confirmDeleteModal, file)">Delete</button>
-                </div>
-            </li>
+        <ul class="list-group list-file-uploads" *ngIf="fileUploads && !fileUploadsLoading">
+            <ng-container *ngFor="let file of fileUploads">
+                <li class="list-group-item d-flex align-items-center justify-content-between" *ngIf="file.originalName">
+                    <span>{{ file.originalName }}</span>
+                    <span>{{ file.size }}</span>
+                    <div class="pull-right">
+                        <button class="btn btn-sm btn-primary ml-2" (click)="readCSV(file)">View</button>
+                        <button class="btn btn-sm btn-secondary ml-2"
+                            (click)="openConfirmDeleteModal(confirmDeleteModal, file)">Delete</button>
+                    </div>
+                </li>
+            </ng-container>
         </ul>
         <div class="card" *ngIf="!fileUploads.length && !fileUploadsLoading">
             <div class="card-body">There are no files uploaded yet.</div>
+        </div>
+        <div class="card" *ngIf="fileUploadsLoading">
+            <div class="card-body d-flex align-items-center text-info">
+                <span>Loading files...</span>
+                <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>
+            </div>
         </div>
     </div>
     <div class="col-12 mt-5">

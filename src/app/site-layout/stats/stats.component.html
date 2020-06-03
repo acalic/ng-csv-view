@@ -1,17 +1,15 @@
-<div class="row" *ngIf="fileData == ''; else reports">
+<div class="row">
     <div class="col-12 col-md-6 col-lg-4" *ngIf="fileUploads.length">
         <ul class="list-group list-file-uploads" >
-            <li class="list-group-item d-flex align-items-center justify-content-between" *ngFor="let file of fileUploads">
-                <span><a>{{ file.name }}</a></span>
-                <span>{{ file.size }}</span>
-                <button class="btn btn-sm btn-primary" (click)="buildReports(file)" [disabled]="isLoading">
-                    <span *ngIf="!file.selected; else loadingBtn">View</span>
-                    <ng-template #loadingBtn>
-                        <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
-                        <span>Loading...</span>
-                    </ng-template>
-                </button>
-            </li>
+            <ng-container *ngFor="let file of fileUploads">
+                <li class="list-group-item d-flex align-items-center justify-content-between" *ngIf="file.originalName">
+                    <span>{{ file.originalName }}</span>
+                    <span>{{ file.size }}</span>
+                    <button class="btn btn-sm btn-primary" [routerLink]="['/stats', file.name]">
+                        <span>View</span>
+                    </button>
+                </li>
+            </ng-container>
         </ul>
     </div>
     <div class="card mx-3" *ngIf="!fileUploads.length && !fileUploadsLoading">
@@ -23,86 +21,10 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-6 col-lg-4" *ngIf="fileUploadsLoading">
+        <div class="d-flex align-items-center text-info">
+            <span>Loading files...</span>
+            <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>
+        </div>
+    </div>
 </div>
-
-<ng-template #reports>
-    <button class="btn btn-secondary" routerLink="/stats">
-        <span class="fa fa-arrow-left mr-2"></span>
-        <span>Go Back</span>
-    </button>
-    <div class="row">
-        <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card bg-success text-white h-100">
-                <div class="card-body bg-success">
-                    <div class="rotate">
-                        <i class="fa fa-list fa-4x"></i>
-                    </div>
-                    <h6 class="text-uppercase">Total records</h6>
-                    <h1 class="display-4">{{ totalRecords }}</h1>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card text-white bg-danger h-100">
-                <div class="card-body bg-danger">
-                    <div class="rotate">
-                        <i class="fa fa-user fa-4x"></i>
-                    </div>
-                    <h6 class="text-uppercase">AVG age of users</h6>
-                    <h1 class="display-4">{{ totalAverageAge | number: '1.0-0' }}</h1>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card text-white bg-info h-100">
-                <div class="card-body bg-info">
-                    <div class="rotate">
-                        <i class="fa fa-twitter fa-4x"></i>
-                    </div>
-                    <h6 class="text-uppercase">Tweets</h6>
-                    <h1 class="display-4">125</h1>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card text-white bg-warning h-100">
-                <div class="card-body">
-                    <div class="rotate">
-                        <i class="fa fa-share fa-4x"></i>
-                    </div>
-                    <h6 class="text-uppercase">Shares</h6>
-                    <h1 class="display-4">36</h1>
-                </div>
-            </div>
-        </div> -->
-    </div>
-    <div class="row mt-3">
-        <div class="col-12 col-md-6" *ngIf="barChartLabels.length">
-            <canvas
-                baseChart
-                [datasets]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"
-                [plugins]="barChartPlugins"
-                [legend]="barChartLegend"
-                [chartType]="barChartType">
-          </canvas>
-        </div>
-    </div>
-</ng-template>
-
-<ng-template #errorModal let-modal let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-title">Error</h4>
-        <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
-            (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <p class="text-danger">{{ error }}</p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" ngbAutofocus class="btn btn-secondary" (click)="modal.dismiss('ok')">Ok</button>
-    </div>
-</ng-template>
