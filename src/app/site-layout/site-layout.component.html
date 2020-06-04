@@ -1,10 +1,11 @@
 <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar" [ngClass]="{'active': sidebarCollapse}">
-        <!-- <div class="img bg-wrap text-center py-4" style="background-image: url(assets/images/bg_1.jpg);"> -->
-        <div class="sidebar-header text-center py-2">
-            <div class="sidebar-header-container">
-                <img class="user-profile-img" src="assets/images/logo.svg" alt="Csv View Logo">
-                <h3>Csv View</h3>
+        <div class="img bg-wrap text-center" style="background-image: url(assets/images/bg_1.jpg);">
+            <div class="sidebar-header text-center py-3">
+                <div class="sidebar-header-container">
+                    <img src="assets/images/logo.png" alt="Csv View Logo">
+                    <h3>Csv View</h3>
+                </div>
             </div>
         </div>
         <ul class="list-unstyled mb-5">
@@ -46,7 +47,7 @@
 
     <div id="content-wrapper">
 
-        <nav class="navbar navbar-expand navbar-light border-bottom pl-4 pl-md-5">
+        <nav class="navbar navbar-expand navbar-light pl-4 pl-md-5">
             <div id="sidebar-toggle" [ngClass]="{'active': sidebarCollapse}"><button type="button" id="sidebar-collapse" class="btn btn-secondary" (click)="toggleSidebar()"></button></div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">

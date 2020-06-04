@@ -194,6 +194,8 @@ h5,
     width: 100%;
     position: relative;
     z-index: 0;
+    background: rgba(0,0,0,0.3);
+
     &:after {
         z-index: -1;
         position: absolute;
@@ -206,18 +208,21 @@ h5,
         opacity: 0.3;
     }
     &-container {
+        img {
+            max-width: 40px;
+        }
         h3 {
             color: $white;
             font-size: 18px;
-            margin-top: 0.5rem;
+            margin-top: 0.3rem;
             margin-bottom: 0;
         }
     }
 }
 
 .user-profile-img {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin: 0 auto;
 }

@@ -26,7 +26,12 @@
             "assets": [
               "src/favicon.ico",
               "src/_redirects",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
+              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

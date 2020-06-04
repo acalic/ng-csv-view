@@ -32,6 +32,7 @@ export class StatsItemComponent implements OnInit {
 
   @ViewChild('errorModal') private errorModal;
 
+  /* Bar chart */
   public barChartOptions: ChartOptions = {
     title: {
       text: '',
@@ -55,6 +56,27 @@ export class StatsItemComponent implements OnInit {
   public barChartData: ChartDataSets[] = [
     { data: [], label: '' }
   ];
+
+  /* Pie chart */
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+    legend: {
+      position: 'top',
+    },
+    plugins: {
+      datalabels: {
+        formatter: (value, ctx) => {
+          const label = ctx.chart.data.labels[ctx.dataIndex];
+          return label;
+        },
+      },
+    }
+  };
+  public pieChartLabels: Label[] = [];
+  public pieChartData: number[] = [];
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartPlugins = [pluginDataLabels];
 
   constructor(
     private _http: HttpClient,
@@ -98,7 +120,8 @@ export class StatsItemComponent implements OnInit {
           let totalsByState = this.uniqueCount(rowsByState);
           let totalsByStateSorted = this.objSort(totalsByState, 10);
 
-          this.renderBarChart(Object.keys(totalsByStateSorted), Object.values(totalsByStateSorted), "Top 10 number of records by state", "states");
+          this.renderBarChart("Top 10 number of records by state", "states", Object.keys(totalsByStateSorted), Object.values(totalsByStateSorted));
+          this.renderPieChart(['Empty state records', 'Records with state value'], [this.totalEmptyStateVals, this.totalRecords - this.totalEmptyStateVals])
         }
 
       });
@@ -107,11 +130,16 @@ export class StatsItemComponent implements OnInit {
     });
   }
 
-  renderBarChart(x: any, y: any, title: string, label: string) {
+  renderBarChart(title: string, label: string, x: any, y: any, ) {
     this.barChartOptions.title.text = title;
     this.barChartLabels = x;
     this.barChartData[0].data = y;
     this.barChartData[0].label = label;
+  }
+
+  renderPieChart(labels: string[], data: number[]) {
+    this.pieChartLabels = labels;
+    this.pieChartData = data;
   }
 
   uniqueCount(array: string[]) {
