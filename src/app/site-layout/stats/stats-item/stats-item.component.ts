@@ -21,10 +21,10 @@ export class StatsItemComponent implements OnInit {
   totalRecords: number;
   totalAverageAge: number;
   totalEmptyStateVals: number = 0;
-  
+
   isLoading: boolean = false;
-  
-  supportedHeaders: string[] = ['guid','name','first','last','email','value','date','phone','age','state','street'];
+
+  supportedHeaders: string[] = ['guid', 'name', 'first', 'last', 'email', 'value', 'date', 'phone', 'age', 'state', 'street'];
   fileData: string = '';
   error: string = '';
 
@@ -74,7 +74,7 @@ export class StatsItemComponent implements OnInit {
     this.isLoading = true;
 
     this._uploadService.getFileDownloadUrlByName(fileName).toPromise().then((url: string) => {
-      this._http.get(url, {responseType: 'text'}).toPromise().then((data: string) => {
+      this._http.get(url, { responseType: 'text' }).toPromise().then((data: string) => {
         this.fileData = data;
         this.isLoading = false;
 
@@ -82,22 +82,23 @@ export class StatsItemComponent implements OnInit {
         let rowsByAge = this._csvOperations.getCsvDataByColumnName(this.fileData, 'age');
         let rowsByDate = this._csvOperations.getCsvDataByColumnName(this.fileData, 'date');
 
-        if(!rowsByState[0] || !rowsByAge[0] || !rowsByDate[0]) {
+        if (!rowsByState[0] || !rowsByAge[0] || !rowsByDate[0]) {
           this.error = 'The reports only work for CSV files that have these columns: ' + this.supportedHeaders.map(elt => String(elt));
           this.openErrorModal();
-        }else {
+        } else {
           this.totalRecords = this._csvOperations.getTotalRecords(this.fileData);
           this.totalAverageAge = this.avg(rowsByAge);
 
-          let totalsByState = this.uniqueCount(rowsByState);
-
-          rowsByDate = rowsByDate.map(function(x) {
+          rowsByDate = rowsByDate.map(function (x) {
             return new Date(x);
           })
 
-          this.lastDate = new Date(Math.max.apply(null, rowsByDate));
+          this.lastDate = this.maxDate(rowsByDate);
 
-          this.renderBarChart(Object.keys(totalsByState), Object.values(totalsByState), "Number of records sorted by state", "states");
+          let totalsByState = this.uniqueCount(rowsByState);
+          let totalsByStateSorted = this.objSort(totalsByState, 10);
+
+          this.renderBarChart(Object.keys(totalsByStateSorted), Object.values(totalsByStateSorted), "Top 10 number of records by state", "states");
         }
 
       });
@@ -116,24 +117,56 @@ export class StatsItemComponent implements OnInit {
   uniqueCount(array: string[]) {
     let count = {};
     array.forEach((i) => {
-      if(i == '') {
+      if (i == '') {
         i = 'BLANK';
       }
       count[i] = (count[i] || 0) + 1;
     });
 
-    this.totalEmptyStateVals = count['BLANK'];
+    this.totalEmptyStateVals = count['BLANK'] ? count['BLANK'] : 0;
     return count;
   }
 
   avg(array) {
     let sum = 0;
-    for(let i = 0; i < array.length; i++) {
-      if(!isNaN(parseFloat(array[i]))) {
+    for (let i = 0; i < array.length; i++) {
+      if (!isNaN(parseFloat(array[i]))) {
         sum = sum + parseFloat(array[i]);
       }
     }
     return sum / array.length;
+  }
+
+  objSort(obj: Object, sliceLength?: number) {
+    var sortable = [];
+    for (var item in obj) {
+      sortable.push([item, obj[item]]);
+    }
+
+    sortable.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+
+    if(sliceLength) { sortable = sortable.slice(0, sliceLength) }
+
+    var objSorted = {}
+    sortable.forEach(function (item) {
+      objSorted[item[0]] = item[1]
+    })
+
+    return objSorted;
+  }
+
+  maxDate(datesArr: Date[]) {
+    var max_dt = datesArr[0],
+      max_dtObj = new Date(datesArr[0]);
+    datesArr.forEach(function (dt, index) {
+      if (new Date(dt) > max_dtObj) {
+        max_dt = dt;
+        max_dtObj = new Date(dt);
+      }
+    });
+    return max_dt;
   }
 
   openErrorModal() {
