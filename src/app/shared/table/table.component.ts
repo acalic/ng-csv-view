@@ -5,11 +5,6 @@ import { map, startWith } from "rxjs/operators";
 
 import { CsvOperationsService } from '@app/core/csv.service';
 
-enum DataDelimiters {
-  Semicolon = ';',
-  Colon = ','
-}
-
 //export type SortColumn = keyof Row | '';
 export type SortColumn = '';
 export type SortDirection = 'asc' | 'desc' | '';

@@ -32,11 +32,11 @@
     <div class="col-12 col-md-8 mt-3 mt-md-0">
         <ul class="list-group list-file-uploads" *ngIf="fileUploads && !fileUploadsLoading">
             <ng-container *ngFor="let file of fileUploads">
-                <li class="list-group-item d-flex align-items-center justify-content-between" *ngIf="file.originalName">
+                <li class="list-group-item d-flex align-items-center justify-content-between fade-in" *ngIf="file.originalName">
                     <span>{{ file.originalName }}</span>
                     <span>{{ file.size }}</span>
                     <div class="pull-right">
-                        <button class="btn btn-sm btn-primary ml-2" (click)="readCSV(file)">View</button>
+                        <button class="btn btn-sm btn-primary ml-2" (click)="readCSV(file)" [disabled]="isLoadingTable">View</button>
                         <button class="btn btn-sm btn-secondary ml-2"
                             (click)="openConfirmDeleteModal(confirmDeleteModal, file)">Delete</button>
                     </div>
@@ -54,7 +54,13 @@
         </div>
     </div>
     <div class="col-12 mt-5">
-        <app-table *ngIf="fileData" [tableData]="fileData"></app-table>
+        <div class="fade-in" *ngIf="fileData">
+            <app-table  [tableData]="fileData"></app-table>
+        </div>
+        <div class="d-flex align-items-center text-info fade-in" *ngIf="fileData == '' && isLoadingTable">
+            <span>Populating table, please wait...</span>
+            <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>
+        </div>
     </div>
 </div>
 

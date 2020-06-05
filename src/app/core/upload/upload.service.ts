@@ -16,17 +16,19 @@ export class UploadService {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
-  uploadProgress: Observable<number>
-  uploadState: Observable<string>
+  uploadProgress$: Observable<number>
+  uploadState$: Observable<string>
 
-  fileUploadsNum: number;
+  fileUploadsNum$: Observable<number>;
 
   private basePath = '/csv_uploads';
   private storageRef = this.afStorage.ref(this.basePath);
 
   constructor(
     private afStorage: AngularFireStorage
-  ) {}
+  ) {
+    this.fileUploadsNum$ = this.getFileUploadsNumber().pipe(map(x => x));
+  }
 
   getFileUploads(): Observable<any> {
     return this.storageRef.listAll().map(res => {
@@ -34,19 +36,18 @@ export class UploadService {
     })
   }
 
-  getFileUploadsNumber(): Observable<number> {
+  getFileUploadsNumber(): Observable<any> {
     return this.storageRef.listAll().map(res => {
-      this.fileUploadsNum = res.items.length;
-      return this.fileUploadsNum;
+      return res.items.length;
     })
   }
 
   getUploadProgress(): Observable<number> {
-    return this.uploadProgress;
+    return this.uploadProgress$;
   }
 
   getUploadState(): Observable<string> {
-    return this.uploadState;
+    return this.uploadState$;
   }
 
   getFileDownloadUrl(file: any): Observable<string> {
@@ -70,8 +71,8 @@ export class UploadService {
     }
     
     this.task = this.ref.put(fileUpload, metadata);
-    this.uploadProgress = this.task.percentageChanges();
-    this.uploadState = this.task.snapshotChanges().pipe(map(s => s.state));
+    this.uploadProgress$ = this.task.percentageChanges();
+    this.uploadState$ = this.task.snapshotChanges().pipe(map(s => s.state));
   }
 
   deleteFile(file: any) {

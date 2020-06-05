@@ -1,4 +1,4 @@
-<div *ngIf="fileData && !isLoading && !error; else loading">
+<div *ngIf="fileData && !isLoading && !error; else loading" class="fade-in">
     <button class="btn btn-secondary" routerLink="/stats">
         <span class="fa fa-arrow-left mr-2"></span>
         <span>Go Back</span>
@@ -75,7 +75,7 @@
 </div>
 
 <ng-template #loading>
-    <div class="d-flex align-items-center text-info">
+    <div class="d-flex align-items-center text-info fade-in">
         <span>Generating reports...</span>
         <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>
     </div>

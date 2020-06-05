@@ -2,7 +2,7 @@
     <div class="col-12 col-md-6 col-lg-4" *ngIf="fileUploads.length">
         <ul class="list-group list-file-uploads" >
             <ng-container *ngFor="let file of fileUploads">
-                <li class="list-group-item d-flex align-items-center justify-content-between" *ngIf="file.originalName">
+                <li class="list-group-item d-flex align-items-center justify-content-between fade-in" *ngIf="file.originalName">
                     <span>{{ file.originalName }}</span>
                     <span>{{ file.size }}</span>
                     <button class="btn btn-sm btn-primary" [routerLink]="['/stats', file.name]">
@@ -13,7 +13,7 @@
         </ul>
     </div>
     <div class="card mx-3" *ngIf="!fileUploads.length && !fileUploadsLoading">
-        <div class="card-body d-flex align-items-center justify-content-space-between">
+        <div class="card-body d-flex align-items-center justify-content-space-between fade-in">
             <i class="fa fa-info-circle mr-3"></i>
             <div>
                 <span class="d-block">There are no files uploaded yet.</span>
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="col-12 col-md-6 col-lg-4" *ngIf="fileUploadsLoading">
-        <div class="d-flex align-items-center text-info">
+        <div class="d-flex align-items-center text-info fade-in">
             <span>Loading files...</span>
             <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>
         </div>

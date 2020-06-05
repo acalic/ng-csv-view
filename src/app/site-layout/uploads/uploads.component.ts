@@ -26,12 +26,13 @@ export class UploadsComponent implements OnInit {
 
   fileUploads: FileUpload[] = [];
   fileUploadsSub: Subscription;
+
   fileUploadsLoading: boolean = true;
+  isLoadingTable: boolean = false;
 
   closeResult: string = '';
   fileNameDelete: string = '';
-
-  fileData: string;
+  fileData: string = '';
 
   @ViewChild('errorModal') private errorModal;
 
@@ -110,11 +111,13 @@ export class UploadsComponent implements OnInit {
   }
 
   readCSV(file: any) {
-    this.fileData = null;
+    this.fileData = '';
+    this.isLoadingTable = true;
 
     file.getDownloadURL().then((url: string) => {
       this._http.get(url, {responseType: 'text'}).toPromise().then((data: string) => {
         this.fileData = data;
+        this.isLoadingTable = false;
       });
     });
   }

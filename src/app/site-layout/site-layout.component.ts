@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ɵConsole } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -51,7 +51,7 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
         this.user = data;
       }
     })
-    this.uploadsNumSub = this.uploadService.getFileUploadsNumber().subscribe(res => {
+    this.uploadsNumSub = this.uploadService.fileUploadsNum$.subscribe(res => {
       this.uploadsNum = res;
     })
   }
