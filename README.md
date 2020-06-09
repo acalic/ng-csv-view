@@ -1,6 +1,8 @@
 ![CSV View banner](src/assets/images/app-banner.png)
 
-# Csv view (Angular app)
+## Preview app: [https://csv-view.firebaseapp.com/](https://csv-view.firebaseapp.com/)
+
+# Csv view
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
 
