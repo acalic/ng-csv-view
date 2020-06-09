@@ -1,6 +1,6 @@
 ![CSV View banner](src/assets/images/app-banner.png)
 
-## Preview app: [https://csv-view.firebaseapp.com/](https://csv-view.firebaseapp.com/)
+## [https://csv-view.firebaseapp.com/](https://csv-view.firebaseapp.com/)
 
 # Csv view
 
