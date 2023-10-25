@@ -24,7 +24,7 @@
     "bootstrap": "^4.5.0",
     "chart.js": "^2.9.3",
     "chartjs-plugin-datalabels": "^0.7.0",
-    "firebase": "^7.14.4",
+    "firebase": "^10.5.0",
     "ng2-charts": "^2.3.2",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5",
